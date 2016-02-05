@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5962.robot.commands;
 
-import org.usfirst.frc.team5962.robot.OI;
 import org.usfirst.frc.team5962.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -16,6 +15,7 @@ public class RunGameTank extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.oi.currentDriveMode = "Logitech Gamepad in Tankdrive mode";
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,11 +25,11 @@ public class RunGameTank extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	 return OI.gameArcadeMode.get()
-        	     || OI.gameXArcadeMode.get()
-        	     || OI.joystickArcadeMode.get()
-        		 || OI.gameXTankMode.get()
-        		 || OI.joystickTankMode.get();
+    	 return Robot.oi.gameArcadeMode.get()
+        	     || Robot.oi.gameXArcadeMode.get()
+        	     || Robot.oi.joystickArcadeMode.get()
+        		 || Robot.oi.gameXTankMode.get()
+        		 || Robot.oi.joystickTankMode.get();
     }
 
     // Called once after isFinished returns true

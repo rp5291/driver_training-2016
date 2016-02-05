@@ -20,13 +20,11 @@ public class RobotMap {
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
 	
-    public static Victor subsystem1Victor1;
-    public static Victor subsystem1Victor2;
+    public static Victor subsystem1Victor1 = new Victor(0);
+    public static Victor subsystem1Victor2 = new Victor(1);
     
     
     public static void init() {
-        subsystem1Victor1 = new Victor(0);
-        subsystem1Victor2 = new Victor(1);
         LiveWindow.addActuator("Subsystem 1", "Victor 1", subsystem1Victor1);
         LiveWindow.addActuator("Subsystem 1", "Victor 2", subsystem1Victor2);
     }
