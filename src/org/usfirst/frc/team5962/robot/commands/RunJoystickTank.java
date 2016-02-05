@@ -1,18 +1,17 @@
-
 package org.usfirst.frc.team5962.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
+import org.usfirst.frc.team5962.robot.OI;
 import org.usfirst.frc.team5962.robot.Robot;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class RunJoystickTank extends Command {
 
-    public ExampleCommand() {
+    public RunJoystickTank() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+        requires(Robot.drive1);
     }
 
     // Called just before this Command runs the first time
@@ -21,11 +20,16 @@ public class ExampleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.drive1.joystickTank();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	 return OI.gameArcadeMode.get()
+        	     || OI.gameXArcadeMode.get()
+        	     || OI.gameTankMode.get()
+        		 || OI.gameXTankMode.get()
+        		 || OI.joystickArcadeMode.get();
     }
 
     // Called once after isFinished returns true
@@ -35,5 +39,6 @@ public class ExampleCommand extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

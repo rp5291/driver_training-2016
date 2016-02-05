@@ -1,4 +1,8 @@
 package org.usfirst.frc.team5962.robot;
+
+import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -15,4 +19,16 @@ public class RobotMap {
     // number and the module. For example you with a rangefinder:
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
+	
+    public static Victor subsystem1Victor1;
+    public static Victor subsystem1Victor2;
+    
+    
+    public static void init() {
+        subsystem1Victor1 = new Victor(0);
+        subsystem1Victor2 = new Victor(1);
+        LiveWindow.addActuator("Subsystem 1", "Victor 1", subsystem1Victor1);
+        LiveWindow.addActuator("Subsystem 1", "Victor 2", subsystem1Victor2);
+    }
+
 }
