@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5962.robot;
 
+import org.usfirst.frc.team5962.robot.subsystems.Speed;
+
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -20,13 +22,14 @@ public class RobotMap {
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
 	
-    public static Victor subsystem1Victor1 = new Victor(0);
-    public static Victor subsystem1Victor2 = new Victor(1);
+    public static Victor Victor1 = new Victor(0);
+    public static Victor Victor2 = new Victor(1);
     
     
     public static void init() {
-        LiveWindow.addActuator("Subsystem 1", "Victor 1", subsystem1Victor1);
-        LiveWindow.addActuator("Subsystem 1", "Victor 2", subsystem1Victor2);
+        LiveWindow.addActuator("Subsystem 1", "Victor 1", Victor1);
+        LiveWindow.addActuator("Subsystem 1", "Victor 2", Victor2);
+        Speed.Speed();
     }
 
 }

@@ -43,7 +43,7 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 
-	public Joystick gamepad1, gamepad2, joystickleft, joystickright;
+	public Joystick gamePad1, gamePad2, joystickLeft, joystickRight;
 
 	public static JoystickButton joystickButton1;
 	public static JoystickButton joystickButton2;
@@ -58,21 +58,21 @@ public class OI {
 	public String currentDriveMode = "";
 
 	public OI() {
-		gamepad1 = new Joystick(0);
-		gamepad2 = new Joystick(1);
-		joystickleft = new Joystick(2);
-		joystickright = new Joystick(3);
+		gamePad1 = new Joystick(0);
+		gamePad2 = new Joystick(1);
+		joystickLeft = new Joystick(2);
+		joystickRight = new Joystick(3);
 
-		joystickButton1 = new JoystickButton(gamepad1, 4);
-		joystickButton2 = new JoystickButton(gamepad1, 5);
+		joystickButton1 = new JoystickButton(gamePad1, 4);
+		joystickButton2 = new JoystickButton(gamePad1, 5);
 
 		// Buttons to control mode switch
-		gameArcadeMode = new JoystickButton(joystickright, 7);
-		gameXArcadeMode = new JoystickButton(joystickright, 8);
-		joystickArcadeMode = new JoystickButton(joystickright, 9);
-		joystickTankMode = new JoystickButton(joystickright, 10);
-		gameTankMode = new JoystickButton(joystickright, 11);
-		gameXTankMode = new JoystickButton(joystickright, 12);
+		gameArcadeMode = new JoystickButton(joystickRight, 7);
+		gameXArcadeMode = new JoystickButton(joystickRight, 8);
+		joystickArcadeMode = new JoystickButton(joystickRight, 9);
+		joystickTankMode = new JoystickButton(joystickRight, 10);
+		gameTankMode = new JoystickButton(joystickRight, 11);
+		gameXTankMode = new JoystickButton(joystickRight, 12);
 
 		gameArcadeMode.whenPressed(new RunArcadeGame());
 		gameXArcadeMode.whenPressed(new RunArcadeXGame());
@@ -84,19 +84,19 @@ public class OI {
 	}
 
 	public Joystick getJoystick1() {
-		return gamepad1;
+		return gamePad1;
 	}
 
 	public Joystick getJoystick2() {
-		return gamepad2;
+		return gamePad2;
 	}
 
 	public Joystick getJoystick3() {
-		return joystickleft;
+		return joystickLeft;
 	}
 
 	public Joystick getJoystick4() {
-		return joystickright;
+		return joystickRight;
 	}
 
 }
