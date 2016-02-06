@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team5962.robot.commands.RunArcadeGame;
 import org.usfirst.frc.team5962.robot.subsystems.Drive;
+import org.usfirst.frc.team5962.robot.subsystems.Speed;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -97,8 +98,9 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+    	Scheduler.getInstance().run();
     	SmartDashboard.putString("Driver Mode Chooser", oi.currentDriveMode);
+    	 Speed.Speed();
     }
     
     /**

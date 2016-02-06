@@ -12,30 +12,30 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Drive extends Subsystem {
 
-	RobotDrive myRobot = new RobotDrive(RobotMap.subsystem1Victor1, RobotMap.subsystem1Victor2);
+	RobotDrive myRobot = new RobotDrive(RobotMap.Victor1, RobotMap.Victor2);
 
 	public void gameTank() {
-		myRobot.tankDrive(Robot.oi.gamepad1.getRawAxis(1), Robot.oi.gamepad1.getRawAxis(5));
+		myRobot.tankDrive(Robot.oi.gamePad1.getRawAxis(1), Robot.oi.gamePad1.getRawAxis(5));
 	}
 
 	public void gameXTank() {
-		myRobot.tankDrive(Robot.oi.gamepad2.getRawAxis(1), Robot.oi.gamepad2.getRawAxis(5));
+		myRobot.tankDrive(Robot.oi.gamePad2.getRawAxis(1), Robot.oi.gamePad2.getRawAxis(5));
 	}
 
 	public void joystickTank() {
-		myRobot.tankDrive(Robot.oi.joystickleft, Robot.oi.joystickright);
+		myRobot.tankDrive(Robot.oi.joystickLeft, Robot.oi.joystickRight);
 	}
 
 	public void arcadeJoystick() {
-		myRobot.arcadeDrive(Robot.oi.joystickright);
+		myRobot.arcadeDrive(Robot.oi.joystickRight);
 	}
 
 	public void arcadeGame() {
-		myRobot.arcadeDrive(Robot.oi.gamepad1);
+		myRobot.arcadeDrive(Robot.oi.gamePad1);
 	}
 
 	public void arcadeXGame() {
-		myRobot.arcadeDrive(Robot.oi.gamepad2);
+		myRobot.arcadeDrive(Robot.oi.gamePad2);
 	}
 
 	@Override
