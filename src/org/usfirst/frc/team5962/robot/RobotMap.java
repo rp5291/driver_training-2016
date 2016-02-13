@@ -2,6 +2,7 @@ package org.usfirst.frc.team5962.robot;
 
 import org.usfirst.frc.team5962.robot.subsystems.Speed;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -24,12 +25,21 @@ public class RobotMap {
 	
     public static Victor Victor1 = new Victor(0);
     public static Victor Victor2 = new Victor(1);
-    
-    
+
+	public static CANTalon CANTalon1 = new CANTalon(10);
+	public static CANTalon CANTalon2 = new CANTalon(11);
+	public static CANTalon CANTalon3 = new CANTalon(12);
+	public static CANTalon CANTalon4 = new CANTalon(13);
+
     public static void init() {
         LiveWindow.addActuator("Subsystem 1", "Victor 1", Victor1);
         LiveWindow.addActuator("Subsystem 1", "Victor 2", Victor2);
-        Speed.Speed();
+   	
+    	//CANTalon1.setInverted(true);
+    	//CANTalon2.setInverted(true);
+    	//CANTalon3.setInverted(true);
+    	//CANTalon4.setInverted(true);
+        Speed.Run();
     }
 
 }

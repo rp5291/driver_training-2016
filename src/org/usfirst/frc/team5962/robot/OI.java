@@ -43,7 +43,9 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 
-	public Joystick gamePad1, gamePad2, joystickLeft, joystickRight;
+	public Joystick gamePad1, gamePad2, joystickLeft;
+
+	public static Joystick joystickRight;
 
 	public static JoystickButton joystickButton1;
 	public static JoystickButton joystickButton2;
@@ -67,12 +69,12 @@ public class OI {
 		joystickButton2 = new JoystickButton(gamePad1, 5);
 
 		// Buttons to control mode switch
-		gameArcadeMode = new JoystickButton(joystickRight, 7);
-		gameXArcadeMode = new JoystickButton(joystickRight, 8);
-		joystickArcadeMode = new JoystickButton(joystickRight, 9);
-		joystickTankMode = new JoystickButton(joystickRight, 10);
-		gameTankMode = new JoystickButton(joystickRight, 11);
-		gameXTankMode = new JoystickButton(joystickRight, 12);
+		gameArcadeMode = new JoystickButton(joystickRight, 11);
+		gameXArcadeMode = new JoystickButton(joystickRight, 9);
+		joystickArcadeMode = new JoystickButton(joystickRight, 7);
+		joystickTankMode = new JoystickButton(joystickRight, 8);
+		gameTankMode = new JoystickButton(joystickRight, 12);
+		gameXTankMode = new JoystickButton(joystickRight, 10);
 
 		gameArcadeMode.whenPressed(new RunArcadeGame());
 		gameXArcadeMode.whenPressed(new RunArcadeXGame());
