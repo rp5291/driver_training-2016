@@ -25,6 +25,7 @@ public class Speed extends Subsystem {
 		else {
 			Robot.drive1.myRobot.setMaxOutput(0.5);
 		}
+		SmartDashboard.putDouble("Throttle", Throttle);
 
 	}
 

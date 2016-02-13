@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team5962.robot.commands.RunArcadeGame;
 import org.usfirst.frc.team5962.robot.subsystems.Drive;
+import org.usfirst.frc.team5962.robot.subsystems.Speed;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -111,6 +112,10 @@ public class Robot extends IterativeRobot {
    	 turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
 
    	 SmartDashboard.putString("Gyro Angle", "" + angleInt);
+   	 
+   	 
+   	drive1.myRobot.drive(-1.0, -angleInt*0.03);
+   	 
     }
 
     public void teleopInit() {
@@ -130,6 +135,9 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
    	 Scheduler.getInstance().run();
+   	 
+   	 Speed.Run();
+   	 
    	 int angleInt;
 
    	 angleInt = (int) gyro.getAngle();
