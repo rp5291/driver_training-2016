@@ -1,6 +1,6 @@
 package org.usfirst.frc.team5962.robot;
 
-import org.usfirst.frc.team5962.robot.subsystems.Speed;
+import org.usfirst.frc.team5962.robot.subsystems.JoystickThrottle;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -29,7 +29,8 @@ public class RobotMap {
     public static void init() {
         LiveWindow.addActuator("Subsystem 1", "Victor 1", Victor1);
         LiveWindow.addActuator("Subsystem 1", "Victor 2", Victor2);
-        Speed.Speed();
+        JoystickThrottle.Speed();
+        //ThrottleCode
     }
 
 }

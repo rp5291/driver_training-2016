@@ -55,6 +55,9 @@ public class OI {
 	public JoystickButton gameTankMode;
 	public JoystickButton gameXTankMode;
 
+	
+
+	
 	public String currentDriveMode = "";
 
 	public OI() {
@@ -73,7 +76,7 @@ public class OI {
 		joystickTankMode = new JoystickButton(joystickRight, 10);
 		gameTankMode = new JoystickButton(joystickRight, 11);
 		gameXTankMode = new JoystickButton(joystickRight, 12);
-
+		
 		gameArcadeMode.whenPressed(new RunArcadeGame());
 		gameXArcadeMode.whenPressed(new RunArcadeXGame());
 		joystickArcadeMode.whenPressed(new RunArcadeJoystick());
@@ -81,6 +84,7 @@ public class OI {
 		gameTankMode.whenPressed(new RunGameTank());
 		gameXTankMode.whenPressed(new RunGameXTank());
 		
+	
 	}
 
 	public Joystick getJoystick1() {
