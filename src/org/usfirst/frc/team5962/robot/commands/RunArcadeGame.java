@@ -4,6 +4,7 @@ package org.usfirst.frc.team5962.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team5962.robot.Robot;
+import org.usfirst.frc.team5962.robot.subsystems.JoystickThrottle;
 
 /**
  *
@@ -22,6 +23,8 @@ public class RunArcadeGame extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.drive1.arcadeGame();
+   	    JoystickThrottle.Speed();
+        //ThrottleCode	    
     }
 
     // Make this return true when this Command no longer needs to run execute()
