@@ -1,12 +1,17 @@
 
 package org.usfirst.frc.team5962.robot;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team5962.robot.commands.RunArcadeGame;
+import org.usfirst.frc.team5962.robot.subsystems.Camera;
+import org.usfirst.frc.team5962.robot.subsystems.ConveyorBeltMotor;
 import org.usfirst.frc.team5962.robot.subsystems.Drive;
+import org.usfirst.frc.team5962.robot.subsystems.InTakeMotor;
 import org.usfirst.frc.team5962.robot.subsystems.JoystickThrottle;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -21,94 +26,111 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-    public static OI oi;
-    public static final Drive drive1 = new Drive();
+	ADXRS450_Gyro gyro;
 
-    Command autonomousCommand;
-    SendableChooser chooser;
+	final int gyroChannel = 0;
+	double AngleSetPoint = 0.0;
+	final double pGain = 0.006;
 
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-    public void robotInit() {
-        oi = new OI();
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new RunArcadeGame());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
-    }
-	
+	public static Drive drive1;
+	public static ConveyorBeltMotor ConveyorBelt;
+	public static InTakeMotor InTake;
+	public static Camera camera1;
+	public static JoystickThrottle Thottle;
+	public static OI oi;
+
+	Command autonomousCommand;
+	SendableChooser chooser;
+
 	/**
-     * This function is called once each time the robot enters Disabled mode.
-     * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
-     */
-    public void disabledInit(){
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
+	 */
+	public void robotInit() {
+		RobotMap.init();
+		ConveyorBelt = new ConveyorBeltMotor();
+		InTake = new InTakeMotor();
+		camera1 = new Camera();
+		drive1 = new Drive();
+		gyro = new ADXRS450_Gyro();
+		Thottle = new JoystickThrottle();
+		oi = new OI();
 
-    }
-	
+		Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+		chooser = new SendableChooser();
+		chooser.addDefault("Default Auto", new RunArcadeGame());
+		// chooser.addObject("My Auto", new MyAutoCommand());
+		SmartDashboard.putData("Auto mode", chooser);
+	}
+
+	public void disabledInit() {
+
+	}
+
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
 
+	public void autonomousInit() {
+
+		gyro.reset();
+		gyro.calibrate();
+		autonomousCommand = (Command) chooser.getSelected();
+
+		int angleInt= (int) gyro.getAngle();
+		double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
+
+		SmartDashboard.putString("Gyro Angle", "" + angleInt);
+
+		// schedule the autonomous command (example)
+		if (autonomousCommand != null)
+			autonomousCommand.start();
+	}
+
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
-	 * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
-	 * Dashboard, remove all of the chooser code and uncomment the getString code to get the auto name from the text box
-	 * below the Gyro
-	 *
-	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
-	 * or additional comparisons to the switch structure below with additional strings & commands.
+	 * This function is called periodically during autonomous
 	 */
-    public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
-    	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
-    }
+	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
+		int angleInt= (int) gyro.getAngle();
+		double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
 
-    /**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-    }
+		SmartDashboard.putString("Gyro Angle", "" + angleInt);
 
-    public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
-    }
+		drive1.myRobot.drive(-1.0, -angleInt * 0.03);
 
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
-    	Scheduler.getInstance().run();
-    	SmartDashboard.putString("Driver Mode Chooser", oi.currentDriveMode);
-   	    JoystickThrottle.Speed();
-   	    //THROTTLE CODE
+	}
 
-    }
-    
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-        LiveWindow.run();
-    }
+	public void teleopInit() {
+		gyro.reset();
+		gyro.calibrate();
+
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
+	}
+
+	/**
+	 * This function is called periodically during operator control
+	 */
+	public void teleopPeriodic() {
+		Scheduler.getInstance().run();
+
+		int angleInt = (int) gyro.getAngle();
+		double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
+		
+		SmartDashboard.putString("Gyro Angle", "" + angleInt);
+		SmartDashboard.putString("Right Joystick POV", "" + OI.joystickRight.getPOV(0));
+		SmartDashboard.putString("Victor1", "" + RobotMap.Victor1.getSpeed());
+		SmartDashboard.putString("Victor2", "" + RobotMap.Victor2.getSpeed());
+		SmartDashboard.putString("Throttle", "" + OI.joystickRight.getThrottle());
+		SmartDashboard.putString("Driver Mode Choose", oi.currentDriveMode);
+
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
 }
