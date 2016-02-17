@@ -79,10 +79,10 @@ public class OI {
 
 		// Use to control the manipulator
 		// Currently only works on right Joystick
-		rightJoystickButton1Index.whenPressed(new GrabbingMechanism());
-		RightJoystickButton3.whenPressed(new ReleaseBallTop());
+		rightJoystickButton1Index.whenPressed(new ReleaseBallTop());
+		RightJoystickButton3.whenPressed(new GrabbingMechanism());
 		rightJoystickButton2Thumb.whenPressed(new ManualBreakGravityMotors()); //manual break gravity motors
-		//RightJoystickButton4.whenPressed(new CameraControl());
+		RightJoystickButton4.whenPressed(new CameraControl());
 
 	}
 
