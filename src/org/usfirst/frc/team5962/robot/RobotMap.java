@@ -22,8 +22,8 @@ public class RobotMap {
 	public static Victor conveyorBeltVictor;
 	public static Victor InTakeVictor;
 	
-    public static Victor Victor1;
-    public static Victor Victor2;
+   // public static Victor Victor1;
+  //  public static Victor Victor2;
     
     public static Servo axisCameraServoViewHorizontal;
 	public static Servo axisCameraServoViewVertical;
@@ -53,8 +53,8 @@ public class RobotMap {
         
         //testing board has 2 victors and the old robot also has 2 victors
         // so make sure if you want to drive the old robot you change RobotDrive 
-        //Victor1 = new Victor(0);
-        //Victor2 = new Victor(1);
+       // Victor1 = new Victor(0);
+       // Victor2 = new Victor(1);
         
         
         //

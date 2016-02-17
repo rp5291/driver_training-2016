@@ -2,6 +2,7 @@
 package org.usfirst.frc.team5962.robot.subsystems;
 
 import org.usfirst.frc.team5962.robot.OI;
+import org.usfirst.frc.team5962.robot.Robot;
 import org.usfirst.frc.team5962.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -17,8 +18,8 @@ public class Drive extends Subsystem {
 	
 	
 	//copy and paste this if you are using 4 Talons
-	public RobotDrive myRobot = new RobotDrive(RobotMap.CANTalon1,RobotMap.CANTalon2,RobotMap.CANTalon3,RobotMap.CANTalon4);
-	
+	//public RobotDrive myRobot = new RobotDrive(RobotMap.CANTalon1,RobotMap.CANTalon2,RobotMap.CANTalon3,RobotMap.CANTalon4);
+	public RobotDrive myRobot = new RobotDrive(RobotMap.conveyorBeltVictor,RobotMap.InTakeVictor);
 	//copy and paste this if you are using 2 Victors
 	//public RobotDrive myRobot = new RobotDrive(RobotMap.Victor1,RobotMap.Victor2);
 
@@ -49,6 +50,13 @@ public class Drive extends Subsystem {
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-
 	}
-}
+		public void driveDistance(int distance) {
+			
+			for(int i=0; i<distance; i++){
+				int angleInt= (int) Robot.gyro.getAngle();
+				Robot.drive1.myRobot.drive(-1.0, -angleInt * 0.03);
+			}
+				}
+	}
+

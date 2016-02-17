@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	ADXRS450_Gyro gyro;
+	public static ADXRS450_Gyro gyro;
 
 	final int gyroChannel = 0;
 	double AngleSetPoint = 0.0;
@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	SendableChooser chooser;
-
+int startingPoint = 0;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -51,10 +51,10 @@ public class Robot extends IterativeRobot {
 		ConveyorBelt = new ConveyorBeltMotor();
 		InTake = new InTakeMotor();
 		camera1 = new Camera();
-		drive1 = new Drive();
 		gyro = new ADXRS450_Gyro();
 		Thottle = new JoystickThrottle();
 		oi = new OI();
+		drive1 = new Drive();
 
 		Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		chooser = new SendableChooser();
@@ -77,10 +77,10 @@ public class Robot extends IterativeRobot {
 		gyro.calibrate();
 		autonomousCommand = (Command) chooser.getSelected();
 
-		int angleInt= (int) gyro.getAngle();
+		 startingPoint = (int) gyro.getAngle();
 		double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
 
-		SmartDashboard.putString("Gyro Angle", "" + angleInt);
+		SmartDashboard.putString("Gyro Angle", "" + startingPoint);
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
@@ -120,8 +120,8 @@ public class Robot extends IterativeRobot {
 		
 		SmartDashboard.putString("Gyro Angle", "" + angleInt);
 		SmartDashboard.putString("Right Joystick POV", "" + OI.joystickRight.getPOV(0));
-		SmartDashboard.putString("Victor1", "" + RobotMap.Victor1.getSpeed());
-		SmartDashboard.putString("Victor2", "" + RobotMap.Victor2.getSpeed());
+		//SmartDashboard.putString("Victor1", "" + RobotMap.Victor1.getSpeed());
+		//SmartDashboard.putString("Victor2", "" + RobotMap.Victor2.getSpeed());
 		SmartDashboard.putString("Throttle", "" + OI.joystickRight.getThrottle());
 		SmartDashboard.putString("Driver Mode Choose", oi.currentDriveMode);
 
@@ -133,4 +133,12 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
+	public void testInit() {
+		
+
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
+		drive1.driveDistance(2);
+	}
+
 }
