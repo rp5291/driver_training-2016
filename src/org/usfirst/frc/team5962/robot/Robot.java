@@ -1,8 +1,6 @@
 
 package org.usfirst.frc.team5962.robot;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -26,12 +24,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	ADXRS450_Gyro gyro;
-
-	final int gyroChannel = 0;
-	double AngleSetPoint = 0.0;
-	final double pGain = 0.006;
-
 	public static Drive drive1;
 	public static ConveyorBeltMotor ConveyorBelt;
 	public static InTakeMotor InTake;
@@ -52,11 +44,9 @@ public class Robot extends IterativeRobot {
 		InTake = new InTakeMotor();
 		camera1 = new Camera();
 		drive1 = new Drive();
-		gyro = new ADXRS450_Gyro();
 		Thottle = new JoystickThrottle();
 		oi = new OI();
 
-		Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		chooser = new SendableChooser();
 		chooser.addDefault("Default Auto", new RunArcadeGame());
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -73,13 +63,11 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 
-		gyro.reset();
-		gyro.calibrate();
+		RobotMap.gyro.resetGyro();
 		autonomousCommand = (Command) chooser.getSelected();
 
-		int angleInt= (int) gyro.getAngle();
-		double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
-
+		int angleInt= RobotMap.gyro.getGyroAngle();
+		//double turningValue = RobotMap.gyro.getTurningValue();
 		SmartDashboard.putString("Gyro Angle", "" + angleInt);
 
 		// schedule the autonomous command (example)
@@ -92,18 +80,20 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		int angleInt= (int) gyro.getAngle();
-		double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
-
+		int angleInt= RobotMap.gyro.getGyroAngle();
+		//double turningValue = RobotMap.gyro.getTurningValue();
 		SmartDashboard.putString("Gyro Angle", "" + angleInt);
+		
+		double currentSpeed = RobotMap.fieldRangeFinder.getCurrentSpeed();		
+		//double currentSpeed = 1.0;		
+		SmartDashboard.putString("Field Ultrasonic - Current Speed", "" + currentSpeed);
 
-		drive1.myRobot.drive(-1.0, -angleInt * 0.03);
+		drive1.myRobot.drive(-currentSpeed, -angleInt * 0.03);
 
 	}
 
 	public void teleopInit() {
-		gyro.reset();
-		gyro.calibrate();
+		RobotMap.gyro.resetGyro();
 
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
@@ -115,8 +105,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-		int angleInt = (int) gyro.getAngle();
-		double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
+		int angleInt= RobotMap.gyro.getGyroAngle();
+		//double turningValue = RobotMap.gyro.getTurningValue();
 		
 		SmartDashboard.putString("Gyro Angle", "" + angleInt);
 		SmartDashboard.putString("Right Joystick POV", "" + OI.joystickRight.getPOV(0));
