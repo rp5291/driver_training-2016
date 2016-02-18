@@ -7,6 +7,6 @@ public class RobotEncoder {
 	Encoder encoder;
 
 	public RobotEncoder() {
-		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+		encoder = new Encoder(3, 4, false, Encoder.EncodingType.k4X);
 	}
 }
