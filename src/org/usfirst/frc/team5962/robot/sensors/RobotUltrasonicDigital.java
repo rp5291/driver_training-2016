@@ -8,7 +8,7 @@ public class RobotUltrasonicDigital extends RobotUltrasonicBase {
     public RobotUltrasonicDigital() {
     	// creates the ultrasonic object and assigns ultra to be an ultrasonic sensor which  
     	// uses DigitalOutput 1 for the echo pulse and DigitalInput 1 for the trigger pulse
-    	ultrasonic = new Ultrasonic(1,1); 												
+    	ultrasonic = new Ultrasonic(7,8); 												
 		ultrasonic.setAutomaticMode(true); 	// turns on automatic mode
     }
     
