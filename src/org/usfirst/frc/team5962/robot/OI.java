@@ -79,8 +79,9 @@ public class OI {
 
 		// Use to control the manipulator
 		// Currently only works on right Joystick
-		rightJoystickButton1Index.whenPressed(new ReleaseBallTop());
-		RightJoystickButton3.whenPressed(new GrabbingMechanism());
+		rightJoystickButton1Index.whenPressed(new GrabbingMechanism()); //this sets it so that the index finger on the right hand grabs the ball
+		RightJoystickButton3.whenPressed(new ReleaseBallTop());   //this shoots the ball out. it run both motors
+		
 		rightJoystickButton2Thumb.whenPressed(new ManualBreakGravityMotors()); //manual break gravity motors
 		RightJoystickButton4.whenPressed(new CameraControl());
 

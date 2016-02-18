@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -45,7 +44,6 @@ public class Robot extends IterativeRobot {
 	SendableChooser chooser;
 	
 	CameraServer server;
-	//Ultrasonic ultra;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -66,7 +64,6 @@ public class Robot extends IterativeRobot {
 		drive1 = new Drive();
 		gyro = new ADXRS450_Gyro();
 		Thottle = new JoystickThrottle();
-		
 		oi = new OI();
 
 		Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
