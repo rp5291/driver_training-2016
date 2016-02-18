@@ -4,6 +4,7 @@ import org.usfirst.frc.team5962.robot.subsystems.JoystickThrottle;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -22,8 +23,8 @@ public class RobotMap {
 	public static Victor conveyorBeltVictor;
 	public static Victor InTakeVictor;
 	
-   // public static Victor Victor1;
-  //  public static Victor Victor2;
+    public static Victor Victor1;
+    public static Victor Victor2;
     
     public static Servo axisCameraServoViewHorizontal;
 	public static Servo axisCameraServoViewVertical;
@@ -35,6 +36,8 @@ public class RobotMap {
 	
 	
 	public static DigitalInput ManualSwitch;
+	
+	public static RobotDrive myRobot;
 	
 	
 	
@@ -53,14 +56,15 @@ public class RobotMap {
         
         //testing board has 2 victors and the old robot also has 2 victors
         // so make sure if you want to drive the old robot you change RobotDrive 
-       // Victor1 = new Victor(0);
-       // Victor2 = new Victor(1);
+        //Victor1 = new Victor(0);
+        //Victor2 = new Victor(1);
         
         
         //
         conveyorBeltVictor = new Victor(0);
         InTakeVictor = new Victor(1);
     	
+        InTakeVictor.setInverted(true);
         
         axisCameraServoViewHorizontal   = new Servo(2);
     	axisCameraServoViewVertical  	= new Servo(3);
@@ -71,13 +75,18 @@ public class RobotMap {
     	CANTalon2 = new CANTalon(11);
     	CANTalon3 = new CANTalon(12);
     	CANTalon4 = new CANTalon(13);
+    	
+    	
+    	
    	
     	//CANTalon1.setInverted(true);
     	//CANTalon2.setInverted(true);
     	//CANTalon3.setInverted(true);
     	//CANTalon4.setInverted(true);
-        
-        
+
+    	
+    	//myRobot = new RobotDrive(RobotMap.Victor1,RobotMap.Victor2);
+    	myRobot = new RobotDrive(RobotMap.CANTalon1,RobotMap.CANTalon2,RobotMap.CANTalon3,RobotMap.CANTalon4);
         
     }
 

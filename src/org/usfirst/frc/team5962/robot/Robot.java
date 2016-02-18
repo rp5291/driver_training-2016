@@ -2,8 +2,10 @@
 package org.usfirst.frc.team5962.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -26,7 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static ADXRS450_Gyro gyro;
+	ADXRS450_Gyro gyro;
 
 	final int gyroChannel = 0;
 	double AngleSetPoint = 0.0;
@@ -41,20 +43,31 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	SendableChooser chooser;
-int startingPoint = 0;
+	
+	CameraServer server;
+	//Ultrasonic ultra;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
+    public Robot() {
+        server = CameraServer.getInstance();
+        server.setQuality(50);
+        //the camera name (ex "cam0") can be found through the roborio web interface
+        server.startAutomaticCapture("cam0");
+    }
+	
 	public void robotInit() {
 		RobotMap.init();
 		ConveyorBelt = new ConveyorBeltMotor();
 		InTake = new InTakeMotor();
 		camera1 = new Camera();
+		drive1 = new Drive();
 		gyro = new ADXRS450_Gyro();
 		Thottle = new JoystickThrottle();
+		
 		oi = new OI();
-		drive1 = new Drive();
 
 		Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		chooser = new SendableChooser();
@@ -75,16 +88,18 @@ int startingPoint = 0;
 
 		gyro.reset();
 		gyro.calibrate();
-		autonomousCommand = (Command) chooser.getSelected();
+		//autonomousCommand = (Command) chooser.getSelected();
 
-		 startingPoint = (int) gyro.getAngle();
+		int angleInt= (int) gyro.getAngle();
 		double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
 
-		SmartDashboard.putString("Gyro Angle", "" + startingPoint);
+		SmartDashboard.putString("Gyro Angle", "" + angleInt);
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		
+		
 	}
 
 	/**
@@ -97,7 +112,7 @@ int startingPoint = 0;
 
 		SmartDashboard.putString("Gyro Angle", "" + angleInt);
 
-		drive1.myRobot.drive(-1.0, -angleInt * 0.03);
+		RobotMap.myRobot.drive(-0.25, -angleInt * 0.03);
 
 	}
 
@@ -120,8 +135,8 @@ int startingPoint = 0;
 		
 		SmartDashboard.putString("Gyro Angle", "" + angleInt);
 		SmartDashboard.putString("Right Joystick POV", "" + OI.joystickRight.getPOV(0));
-		//SmartDashboard.putString("Victor1", "" + RobotMap.Victor1.getSpeed());
-		//SmartDashboard.putString("Victor2", "" + RobotMap.Victor2.getSpeed());
+		//SmartDashboard.putString("Victor1", "" + RobotMap.InTakeVictor.getSpeed());
+		//SmartDashboard.putString("Victor2", "" + RobotMap.conveyorBeltVictor.getSpeed());
 		SmartDashboard.putString("Throttle", "" + OI.joystickRight.getThrottle());
 		SmartDashboard.putString("Driver Mode Choose", oi.currentDriveMode);
 
@@ -133,12 +148,4 @@ int startingPoint = 0;
 	public void testPeriodic() {
 		LiveWindow.run();
 	}
-	public void testInit() {
-		
-
-		if (autonomousCommand != null)
-			autonomousCommand.cancel();
-		drive1.driveDistance(2);
-	}
-
 }

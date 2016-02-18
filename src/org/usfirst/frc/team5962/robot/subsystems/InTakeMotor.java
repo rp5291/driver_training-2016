@@ -20,7 +20,7 @@ public class InTakeMotor extends Subsystem {
 	}
 	
 	public static void runUpwardSlow (){
-		Victor1.set(-0.5);
+		Victor1.set(-0.25);
 	  //Turn on Belt
 	}
 	
