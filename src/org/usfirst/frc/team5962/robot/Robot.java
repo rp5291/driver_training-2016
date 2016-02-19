@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import org.usfirst.frc.team5962.robot.commands.ReleaseBallTop;
 import org.usfirst.frc.team5962.robot.commands.RunArcadeGame;
 import org.usfirst.frc.team5962.robot.subsystems.Camera;
 import org.usfirst.frc.team5962.robot.subsystems.ConveyorBeltMotor;
@@ -27,7 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	ADXRS450_Gyro gyro;
+	public static ADXRS450_Gyro gyro;
 
 	final int gyroChannel = 0;
 	double AngleSetPoint = 0.0;
@@ -39,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static Camera camera1;
 	public static JoystickThrottle Thottle;
 	public static OI oi;
+	public static ReleaseBallTop releaseBallTop;
 
 	Command autonomousCommand;
 	SendableChooser chooser;
@@ -50,6 +53,7 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
     public Robot() {
+    	
         server = CameraServer.getInstance();
         server.setQuality(50);
         //the camera name (ex "cam0") can be found through the roborio web interface
@@ -65,6 +69,7 @@ public class Robot extends IterativeRobot {
 		gyro = new ADXRS450_Gyro();
 		Thottle = new JoystickThrottle();
 		oi = new OI();
+		releaseBallTop = new ReleaseBallTop();
 
 		Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		chooser = new SendableChooser();
@@ -89,12 +94,14 @@ public class Robot extends IterativeRobot {
 
 		int angleInt= (int) gyro.getAngle();
 		double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
+		
 
+		
 		SmartDashboard.putString("Gyro Angle", "" + angleInt);
 
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
-			autonomousCommand.start();
+		//if (autonomousCommand != null)
+		//	autonomousCommand.start();
 		
 		
 	}
@@ -103,14 +110,41 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
+		//moving negative is right, positive is left
+		//gyro negative is left, positive is right
 		Scheduler.getInstance().run();
-		int angleInt= (int) gyro.getAngle();
-		double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
-
+		
+		boolean rturn = false;
+		boolean ultraSensor = false;
+		
+		int angleInt = (int) gyro.getAngle();
 		SmartDashboard.putString("Gyro Angle", "" + angleInt);
-
-		RobotMap.myRobot.drive(-0.25, -angleInt * 0.03);
-
+		
+		//RobotMap.myRobot.drive(0.1, 1);
+		
+		
+		
+		//	double turningValue = (AngleSetPoint - gyro.getAngle()) * pGain;
+		
+		
+		if(ultraSensor == false){	
+			RobotMap.myRobot.drive(-0.3, -angleInt * 0.03);
+		}
+		else if(ultraSensor == true && rturn == false && gyro.getAngle() < 90){
+			RobotMap.myRobot.drive(0.1, -1);
+		}
+		else if(gyro.getAngle() >= 90 && gyro.getAngle() < 91){
+			rturn = true;
+			ultraSensor = false;
+			gyro.reset();
+			gyro.calibrate();
+		}
+		else if(ultraSensor == true && rturn == true){
+			releaseBallTop.start();
+		}
+		
+		//ultraSensor = true;
+		
 	}
 
 	public void teleopInit() {
@@ -135,6 +169,7 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putString("Victor1", "" + RobotMap.InTakeVictor.getSpeed());
 		//SmartDashboard.putString("Victor2", "" + RobotMap.conveyorBeltVictor.getSpeed());
 		SmartDashboard.putString("Throttle", "" + OI.joystickRight.getThrottle());
+		SmartDashboard.putString("Throttle", "" + "my test 123");
 		SmartDashboard.putString("Driver Mode Choose", oi.currentDriveMode);
 
 	}

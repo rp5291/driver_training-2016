@@ -56,25 +56,25 @@ public class RobotMap {
         
         //testing board has 2 victors and the old robot also has 2 victors
         // so make sure if you want to drive the old robot you change RobotDrive 
-        //Victor1 = new Victor(0);
-        //Victor2 = new Victor(1);
+        Victor1 = new Victor(0);
+        Victor2 = new Victor(1);
         
         
         //
-        conveyorBeltVictor = new Victor(0);
-        InTakeVictor = new Victor(1);
+        //conveyorBeltVictor = new Victor(0);
+        //InTakeVictor = new Victor(1);
     	
-        InTakeVictor.setInverted(true);
+        //InTakeVictor.setInverted(true);
         
         axisCameraServoViewHorizontal   = new Servo(2);
     	axisCameraServoViewVertical  	= new Servo(3);
 
     	
     	//
-    	CANTalon1 = new CANTalon(10);
-    	CANTalon2 = new CANTalon(11);
-    	CANTalon3 = new CANTalon(12);
-    	CANTalon4 = new CANTalon(13);
+    	//CANTalon1 = new CANTalon(10);
+    	//CANTalon2 = new CANTalon(11);
+    	//CANTalon3 = new CANTalon(12);
+    	//CANTalon4 = new CANTalon(13);
     	
     	
     	
@@ -85,8 +85,8 @@ public class RobotMap {
     	//CANTalon4.setInverted(true);
 
     	
-    	//myRobot = new RobotDrive(RobotMap.Victor1,RobotMap.Victor2);
-    	myRobot = new RobotDrive(RobotMap.CANTalon1,RobotMap.CANTalon2,RobotMap.CANTalon3,RobotMap.CANTalon4);
+    	myRobot = new RobotDrive(Victor1, Victor2);
+    	//myRobot = new RobotDrive(RobotMap.CANTalon1,RobotMap.CANTalon2,RobotMap.CANTalon3,RobotMap.CANTalon4);
         
     }
 
